@@ -15,6 +15,8 @@ import socket
 import setting
 import base64
 import random
+import ua_generator
+
 
 from loguru import logger
 from setting import RedisKey
@@ -45,9 +47,12 @@ class Downloader():
 
     def load_user_agent(self):
         self.user_agent = []
-        with open("./user_agent.txt", "r") as f:
+        with open("./resources/real_ua_list.txt", "r") as f:
             for line in f:
                 self.user_agent.append(line.strip())
+                
+        self.user_agent += [ua_generator.generate(device='desktop', browser=('chrome', 'edge')).text for _ in range(50)]
+        self.user_agent += [ua_generator.generate(platform=('ios', 'macos'), browser='chrome').text for _ in range(50)]
         
 
             

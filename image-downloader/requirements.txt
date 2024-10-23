@@ -7,3 +7,4 @@ loguru
 fastparquet
 retrying
 pyarrow
+ua-generator
