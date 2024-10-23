@@ -54,6 +54,8 @@ def add_task():
         for index, row in df.iterrows():
             image_list = row.get("image_list")
             for img_url in image_list:
+                if img_url is None:
+                    continue
                 image_id = hash_url(img_url)
                 img_path = f"{image_id}.jpg"
                 task_json = {"img_path": img_path, "img_url": img_url, "file_name": filename}

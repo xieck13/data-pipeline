@@ -16,6 +16,7 @@ import setting
 import base64
 import random
 import ua_generator
+import traceback
 
 
 from loguru import logger
@@ -78,8 +79,9 @@ class Downloader():
         error_msg = ""
         try:
             img_url = task_json.get("img_url")
+            
             time.time()
-            img_path = f'{self.base_dir}{time.strftime("%Y%m%d%H", time.localtime())}{task_json.get("img_path")}'.replace("//", "/")
+            img_path = os.path.join(self.base_dir, time.strftime("%Y%m%d%H", time.localtime()), task_json.get("img_path"))
             if img_url.startswith('data:image'):
                 # 某些情况下url存着image base64
                 base64_string = img_url.split(',', 1)[1]
@@ -137,6 +139,7 @@ class Downloader():
                         os.makedirs(dir_path)
                         self.pre_dir = dir_path
                 except Exception as e:
+                    traceback.print_exc()
                     logger.error(f"error_task {task_str}    error_info {e}")
                     redis_client.lpush(RedisKey.error_key, task_str)
                     redis_client.incr(RedisKey.count_error, 1)
