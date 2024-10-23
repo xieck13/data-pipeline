@@ -15,7 +15,7 @@ from setting import RedisKey
 
 logger_format = "{time:YYYY-MM-DD HH:mm:ss,SSS} [{thread}] {level} {file} {line} - {message}"
 
-redis_client = redis.Redis(host="192.168.20.191", port=6379, db=0, encoding="utf-8", decode_responses=True)
+redis_client = redis.Redis(host=setting.redis_ip, port=setting.redis_port, db=setting.redis_db, encoding="utf-8", decode_responses=True)
 
 if not os.path.exists(setting.store_error_dir):
     os.makedirs(setting.store_error_dir)
