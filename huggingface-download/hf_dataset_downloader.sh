@@ -1,17 +1,13 @@
 #!/bin/bash
-
-# 检查参数数量
-if [ "$#" -ne 2 ]; then
-    echo "Usage: \$0 <remote-repo> <local-dir>"
-    exit 1
-fi
+export HF_ENDPOINT="http://hf-mirror.com"
 
 # 获取参数
-REMOTE_REPO=\$1
-LOCAL_DIR=\$2
+REMOTE_REPO="LLM360/TxT360"
+LOCAL_DIR="/media/xieck13/Elements/TxT360"
+INCLUDE_PATTERN="data/common-crawl/*"
 
 # 定义要执行的命令
-COMMAND="huggingface-cli download --repo-type dataset --resume-download $REMOTE_REPO --local-dir $LOCAL_DIR"
+COMMAND="huggingface-cli download --repo-type dataset --resume-download $REMOTE_REPO --local-dir $LOCAL_DIR --include $INCLUDE_PATTERN"
 
 # 无限循环，直到命令成功执行
 while true; do
